@@ -1,9 +1,6 @@
 import { StyleSheet } from "react-native";
-
-import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
+import { View } from "@/components/Themed";
 import QuizCard from "@/components/QuizCard";
-import { Divider } from "@/components/ui/divider";
 const categoriesMockData = [
   {
     label: "History",

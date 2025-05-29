@@ -85,6 +85,18 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name='tempAuth'
+        options={{
+          title: "Temporary Auth Tab",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon
+              name='copy'
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
