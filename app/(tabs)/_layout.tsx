@@ -1,5 +1,7 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+
 import { Link, Tabs } from "expo-router";
 import { Pressable } from "react-native";
 
@@ -30,7 +32,7 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
-        name='index'
+        name='homeTab'
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => (
@@ -58,12 +60,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='categories'
+        name='categoriesTab'
         options={{
           title: "Categories",
           tabBarIcon: ({ color }) => (
-            <TabBarIcon
-              name='copy'
+            <FontAwesome5
+              name='landmark'
+              size={25}
               color={color}
             />
           ),

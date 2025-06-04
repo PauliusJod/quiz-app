@@ -23,7 +23,7 @@ const categoriesMockData = [
   },
 ];
 
-export default function CategoriesTabScreen() {
+export default function CategoriesTab() {
   return (
     <ScrollView style={styles.container}>
       {categoriesMockData.map((category, index) => (

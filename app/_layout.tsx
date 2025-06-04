@@ -12,6 +12,7 @@ import { useColorScheme } from "@/components/useColorScheme";
 import { AuthSession, Session } from "@supabase/supabase-js";
 import { supabase } from "@/components/lib/supabase";
 import { SessionContext } from "@/components/lib/useSessionContext";
+import { CurrentQuizContext } from "@/components/lib/useCurrentQuizContext";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -57,6 +58,8 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const [sessionValue, setSessionValue] = useState<AuthSession | null>(null);
+  const [currentQuizUserValue, setCurrentQuizUserValue] = useState<AuthSession | null>(null);
+  const [currentQuizValue, setCurrentQuizValue] = useState<AuthSession | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -71,24 +74,26 @@ function RootLayoutNav() {
 
   return (
     <SessionContext.Provider value={{ sessionValue, setSessionValue }}>
-      <GluestackUIProvider mode='light'>
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen
-              name='(tabs)'
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='modal'
-              options={{ presentation: "modal" }}
-            />
-            <Stack.Screen
-              name='settings'
-              options={{ presentation: "modal" }}
-            />
-          </Stack>
-        </ThemeProvider>
-      </GluestackUIProvider>
+      <CurrentQuizContext.Provider value={{ currentQuizUserValue, setCurrentQuizUserValue, currentQuizValue, setCurrentQuizValue }}>
+        <GluestackUIProvider mode='light'>
+          <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+            <Stack>
+              <Stack.Screen
+                name='(tabs)'
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='modal'
+                options={{ presentation: "modal" }}
+              />
+              <Stack.Screen
+                name='settings'
+                options={{ presentation: "modal" }}
+              />
+            </Stack>
+          </ThemeProvider>
+        </GluestackUIProvider>
+      </CurrentQuizContext.Provider>
     </SessionContext.Provider>
   );
 }

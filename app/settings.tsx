@@ -1,16 +1,17 @@
+import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet } from "react-native";
+import { useColorScheme } from "nativewind";
+import colors from "tailwindcss/colors";
+import Colors from "@/constants/Colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { Text, View } from "@/components/Themed";
 import { Box } from "@/components/ui/box";
 import { VStack } from "@/components/ui/vstack";
 import { Divider } from "@/components/ui/divider";
 import { Switch } from "@/components/ui/switch";
-import colors from "tailwindcss/colors";
-import { useColorScheme } from "nativewind";
-import Colors from "@/constants/Colors";
 import { Pressable } from "@/components/ui/pressable";
-import { useEffect, useState } from "react";
 import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
 import { useSessionContext } from "@/components/lib/useSessionContext";
 import { supabase } from "@/components/lib/supabase";
@@ -43,34 +44,63 @@ export default function SettingsScreen() {
             className='my-0.5'
             label='Account'
           />
-          {sessionValue && sessionValue.user && <Text>{sessionValue.user.id}</Text>}
           <Pressable
             onPress={() => setShowLoginOptions((prev) => !prev)}
             style={[styles.viewContainer, { backgroundColor: Colors[colorScheme ?? "light"].boxbackground }]}>
-            <Box style={[styles.boxStyle]}>
-              <Text style={styles.title}>Connect with</Text>
-              <View style={[styles.socialsContainer]}>
-                <FontAwesome
-                  name='google'
-                  size={25}
-                  color={Colors[colorScheme ?? "light"].gIconDefault}
-                  style={{ padding: 5, opacity: 1 }}
-                />
-                <FontAwesome
-                  name='facebook-square'
-                  size={25}
-                  color={Colors[colorScheme ?? "light"].fbIconDefault}
-                  style={{ padding: 5, opacity: 1 }}
-                />
-              </View>
-            </Box>
+            {!sessionValue ? (
+              // Session OFF
+              <Box style={[styles.boxStyle]}>
+                <Text style={styles.title}>Connect with</Text>
+                <View style={[styles.socialsContainer]}>
+                  <FontAwesome6
+                    name='square-google-plus'
+                    size={25}
+                    color={Colors[colorScheme ?? "light"].gIconDefault}
+                    style={{ padding: 5, opacity: 1 }}
+                  />
+                  <FontAwesome
+                    name='facebook-square'
+                    size={25}
+                    color={Colors[colorScheme ?? "light"].fbIconDefault}
+                    style={{ padding: 5, opacity: 1 }}
+                  />
+                </View>
+              </Box>
+            ) : (
+              // Session ON
+              <Box style={[styles.boxStyle]}>
+                <Text>{sessionValue.user.user_metadata.name}</Text>
+                <View style={[styles.socialsContainer]}>
+                  <FontAwesome6
+                    name='square-google-plus'
+                    size={25}
+                    color={Colors[colorScheme ?? "light"].gIconDefault}
+                    style={{ padding: 5, opacity: 1 }}
+                  />
+                  {sessionValue.user.user_metadata.email_verified ? (
+                    <FontAwesome
+                      name='check-square'
+                      size={25}
+                      color={Colors[colorScheme ?? "light"].gIconDefault}
+                      style={{ padding: 5, opacity: 1 }}
+                    />
+                  ) : (
+                    <FontAwesome
+                      name='check-square'
+                      size={25}
+                      color={Colors[colorScheme ?? "light"].text}
+                      style={{ padding: 5, opacity: 1 }}
+                    />
+                  )}
+                </View>
+              </Box>
+            )}
             <Box style={[styles.boxStyle, { display: !sessionValue ? "flex" : "none" }]}>
               <GoogleSignInButton />
             </Box>
             <Box style={[styles.boxStyle, { display: sessionValue ? "flex" : "none" }]}>
               <Pressable
                 onPress={async () => {
-                  console.log("click aaaaa...");
                   setLoading(true);
                   try {
                     const { error } = await supabase.auth.signOut();
