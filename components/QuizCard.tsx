@@ -24,7 +24,6 @@ export default function QuizCard({ label, type }: Props) {
         style={styles.boxStyle}>
         <Card style={[styles.none]}>
           {/* { backgroundColor: Colors[colorScheme ?? "light"].boxbackground } */}
-
           <Text style={[styles.label, { backgroundColor: Colors[colorScheme ?? "light"].overImageBackground }]}>{label}</Text>
         </Card>
       </ImageBackground>

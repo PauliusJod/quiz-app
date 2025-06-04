@@ -1,5 +1,4 @@
-import { StyleSheet } from "react-native";
-import { View } from "@/components/Themed";
+import { ScrollView, StyleSheet } from "react-native";
 import QuizCard from "@/components/QuizCard";
 const categoriesMockData = [
   {
@@ -26,14 +25,14 @@ const categoriesMockData = [
 
 export default function CategoriesTabScreen() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {categoriesMockData.map((category, index) => (
         <QuizCard
           key={index}
           label={category.label}
           type={category.type}></QuizCard>
       ))}
-    </View>
+    </ScrollView>
   );
 }
 

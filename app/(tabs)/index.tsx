@@ -1,12 +1,13 @@
-import { StyleSheet } from "react-native";
-import { View } from "@/components/Themed";
+import { ScrollView, StyleSheet } from "react-native";
 import HomePageContent from "../HomePageContent";
+import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <GoogleSignInButton />
       <HomePageContent></HomePageContent>
-    </View>
+    </ScrollView>
   );
 }
 

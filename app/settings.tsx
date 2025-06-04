@@ -10,10 +10,29 @@ import colors from "tailwindcss/colors";
 import { useColorScheme } from "nativewind";
 import Colors from "@/constants/Colors";
 import { Pressable } from "@/components/ui/pressable";
+import { useEffect, useState } from "react";
+import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
+import { useSessionContext } from "@/components/lib/useSessionContext";
+import { supabase } from "@/components/lib/supabase";
 
 // SETTINGS
 export default function SettingsScreen() {
   const { colorScheme, setColorScheme } = useColorScheme();
+  const [showLoginOptions, setShowLoginOptions] = useState<boolean>(true);
+  const [loading, setLoading] = useState(false);
+  const { sessionValue } = useSessionContext();
+  useEffect(() => {
+    console.log(!sessionValue);
+    if (!sessionValue) {
+      setShowLoginOptions(true);
+    } else {
+      setShowLoginOptions(false);
+    }
+  }, []);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
   return (
     <View style={styles.container}>
       <Box className='h-full'>
@@ -24,8 +43,9 @@ export default function SettingsScreen() {
             className='my-0.5'
             label='Account'
           />
+          {sessionValue && sessionValue.user && <Text>{sessionValue.user.id}</Text>}
           <Pressable
-            onPress={() => console.log("Hello")}
+            onPress={() => setShowLoginOptions((prev) => !prev)}
             style={[styles.viewContainer, { backgroundColor: Colors[colorScheme ?? "light"].boxbackground }]}>
             <Box style={[styles.boxStyle]}>
               <Text style={styles.title}>Connect with</Text>
@@ -43,6 +63,27 @@ export default function SettingsScreen() {
                   style={{ padding: 5, opacity: 1 }}
                 />
               </View>
+            </Box>
+            <Box style={[styles.boxStyle, { display: !sessionValue ? "flex" : "none" }]}>
+              <GoogleSignInButton />
+            </Box>
+            <Box style={[styles.boxStyle, { display: sessionValue ? "flex" : "none" }]}>
+              <Pressable
+                onPress={async () => {
+                  console.log("click aaaaa...");
+                  setLoading(true);
+                  try {
+                    const { error } = await supabase.auth.signOut();
+                    console.log("OUT: ", JSON.stringify(error));
+
+                    throw new Error("sign out sucess!");
+                  } catch (error: any) {
+                    console.log("err: ", JSON.stringify(error));
+                    setLoading(false);
+                  }
+                }}>
+                <Text style={styles.title}>Log out</Text>
+              </Pressable>
             </Box>
           </Pressable>
 
