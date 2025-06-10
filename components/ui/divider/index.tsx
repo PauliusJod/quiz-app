@@ -3,7 +3,7 @@ import React from "react";
 import { tva } from "@gluestack-ui/nativewind-utils/tva";
 import { Platform, View } from "react-native";
 import type { VariantProps } from "@gluestack-ui/nativewind-utils";
-import { MonoText } from "@/components/StyledText";
+import { MonoText } from "@/components/[default_components]/StyledText";
 
 const dividerStyle = tva({
   base: "bg-background-200",

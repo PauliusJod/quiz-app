@@ -6,7 +6,7 @@ import colors from "tailwindcss/colors";
 import Colors from "@/constants/Colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import { Text, View } from "@/components/Themed";
+import { Text, View } from "@/components/[default_components]/Themed";
 import { Box } from "@/components/ui/box";
 import { VStack } from "@/components/ui/vstack";
 import { Divider } from "@/components/ui/divider";
@@ -15,6 +15,7 @@ import { Pressable } from "@/components/ui/pressable";
 import GoogleSignInButton from "@/components/auth/GoogleSignInButton";
 import { useSessionContext } from "@/components/lib/useSessionContext";
 import { supabase } from "@/components/lib/supabase";
+import * as Animatable from "react-native-animatable";
 
 // SETTINGS
 export default function SettingsScreen() {
@@ -69,7 +70,7 @@ export default function SettingsScreen() {
             ) : (
               // Session ON
               <Box style={[styles.boxStyle]}>
-                <Text>{sessionValue.user.user_metadata.name}</Text>
+                <Text style={styles.title}>{sessionValue.user.user_metadata.name}</Text>
                 <View style={[styles.socialsContainer]}>
                   <FontAwesome6
                     name='square-google-plus'
@@ -95,25 +96,34 @@ export default function SettingsScreen() {
                 </View>
               </Box>
             )}
-            <Box style={[styles.boxStyle, { display: !sessionValue ? "flex" : "none" }]}>
+            <Box style={[styles.boxStyleSignInView, { display: !sessionValue ? "flex" : "none" }]}>
               <GoogleSignInButton />
             </Box>
             <Box style={[styles.boxStyle, { display: sessionValue ? "flex" : "none" }]}>
-              <Pressable
-                onPress={async () => {
-                  setLoading(true);
-                  try {
-                    const { error } = await supabase.auth.signOut();
-                    console.log("OUT: ", JSON.stringify(error));
+              {sessionValue && !loading ? (
+                <Animatable.View
+                  animation='bounceIn'
+                  duration={3000}
+                  delay={200}>
+                  <Pressable
+                    onPress={async () => {
+                      setLoading(true);
+                      try {
+                        const { error } = await supabase.auth.signOut();
+                        console.log("OUT: ", JSON.stringify(error));
 
-                    throw new Error("sign out sucess!");
-                  } catch (error: any) {
-                    console.log("err: ", JSON.stringify(error));
-                    setLoading(false);
-                  }
-                }}>
-                <Text style={styles.title}>Log out</Text>
-              </Pressable>
+                        throw new Error("sign out sucess!");
+                      } catch (error: any) {
+                        console.log("err: ", JSON.stringify(error));
+                        setLoading(false);
+                      }
+                    }}>
+                    <Text style={styles.text}>Log out</Text>
+                  </Pressable>
+                </Animatable.View>
+              ) : (
+                <></>
+              )}
             </Box>
           </Pressable>
 
@@ -191,13 +201,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "auto",
-    // alignItems: "center",
     paddingTop: 10,
     padding: 10,
-    // justifyContent: "center",
   },
   title: {
     fontSize: 18,
+    fontWeight: "400",
+  },
+  text: {
+    fontSize: 16,
     fontWeight: "400",
   },
   viewContainer: {
@@ -209,7 +221,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     minHeight: 70,
     paddingHorizontal: 20,
-    // backgroundColor: "rgb(255, 233, 213)",
+  },
+  boxStyleSignInView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 70,
+    paddingHorizontal: 20,
   },
   socialsContainer: {
     flexDirection: "row",

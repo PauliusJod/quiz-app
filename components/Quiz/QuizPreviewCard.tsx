@@ -1,9 +1,11 @@
 import { ImageBackground, Pressable, StyleSheet } from "react-native";
-import { Text } from "@/components/Themed";
+import { Text } from "@/components/[default_components]/Themed";
 import { Card } from "@/components/ui/card";
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
-import { imageMap, fallbackImage } from "./ImagesMap";
+import { imageMap, fallbackImage } from "../utils/ImagesMap";
+import { useRouter } from "expo-router";
+import { Box } from "../ui/box";
 
 type Props = {
   label: string;
@@ -11,19 +13,24 @@ type Props = {
   onPress?: () => void;
 };
 
-export default function QuizCard({ label, type }: Props) {
+export default function QuizPreviewCard({ label, type }: Props) {
   const { colorScheme, setColorScheme } = useColorScheme();
+  const router = useRouter();
   const imageSource = imageMap[type] ?? fallbackImage;
   return (
     <Pressable
-      onPress={() => console.log(label)}
+      onPress={() => router.push({ pathname: "/screens/QuizScreen", params: { quizCategory: label, quizId: "123" } })}
       style={{ borderRadius: 20 }}>
       <ImageBackground
         source={imageSource}
         resizeMode='cover'
         style={styles.boxStyle}>
+        <Box style={[styles.textOverImage, { backgroundColor: Colors[colorScheme ?? "light"].overImageBackground }]}>
+          <Text>Score 777</Text>
+          <Text>quizzes 5/25</Text>
+          <Text>rank</Text>
+        </Box>
         <Card style={[styles.none]}>
-          {/* { backgroundColor: Colors[colorScheme ?? "light"].boxbackground } */}
           <Text style={[styles.label, { backgroundColor: Colors[colorScheme ?? "light"].overImageBackground }]}>{label}</Text>
         </Card>
       </ImageBackground>
@@ -47,7 +54,18 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 5,
   },
-
+  textOverImage: {
+    position: "absolute",
+    width: "90%",
+    top: 0,
+    left: 70, //50
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
   none: {
     position: "absolute",
     bottom: 0,

@@ -2,7 +2,9 @@ import { GoogleSignin, GoogleSigninButton, statusCodes } from "@react-native-goo
 import { supabase } from "../lib/supabase";
 import { useState } from "react";
 import { Alert } from "react-native";
-import { Text } from "@/components/Themed";
+import { Text } from "@/components/[default_components]/Themed";
+
+import * as Animatable from "react-native-animatable";
 export default function () {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,40 +17,45 @@ export default function () {
     return <Text>Loading...</Text>;
   }
   return (
-    <GoogleSigninButton
-      size={GoogleSigninButton.Size.Wide}
-      color={GoogleSigninButton.Color.Dark}
-      onPress={async () => {
-        setLoading(true);
-        try {
-          await GoogleSignin.hasPlayServices();
-          const userInfo = await GoogleSignin.signIn();
-          const idToken = (userInfo.data as { idToken: string }).idToken;
-          if (idToken) {
-            const { data, error } = await supabase.auth.signInWithIdToken({
-              provider: "google",
-              token: idToken,
-            });
+    <Animatable.View
+      animation='bounceIn'
+      duration={3000}
+      delay={200}>
+      <GoogleSigninButton
+        size={GoogleSigninButton.Size.Wide}
+        color={GoogleSigninButton.Color.Dark}
+        onPress={async () => {
+          setLoading(true);
+          try {
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
+            const idToken = (userInfo.data as { idToken: string }).idToken;
+            if (idToken) {
+              const { data, error } = await supabase.auth.signInWithIdToken({
+                provider: "google",
+                token: idToken,
+              });
+              setLoading(false);
+            } else {
+              throw new Error("Google Signin failed!");
+            }
+          } catch (error: any) {
             setLoading(false);
-          } else {
-            throw new Error("Google Signin failed!");
+            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+              console.log("---- SIGN_IN_CANCELLED");
+              Alert.alert(error.message);
+            } else if (error.code === statusCodes.IN_PROGRESS) {
+              console.log("---- IN_PROGRESS");
+              Alert.alert(error.message);
+            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+              console.log("---- PLAY_SERVICES_NOT_AVAILABLE");
+              Alert.alert(error.message);
+            } else {
+              Alert.alert(error.message);
+            }
           }
-        } catch (error: any) {
-          setLoading(false);
-          if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-            console.log("---- SIGN_IN_CANCELLED");
-            Alert.alert(error.message);
-          } else if (error.code === statusCodes.IN_PROGRESS) {
-            console.log("---- IN_PROGRESS");
-            Alert.alert(error.message);
-          } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            console.log("---- PLAY_SERVICES_NOT_AVAILABLE");
-            Alert.alert(error.message);
-          } else {
-            Alert.alert(error.message);
-          }
-        }
-      }}
-    />
+        }}
+      />
+    </Animatable.View>
   );
 }
