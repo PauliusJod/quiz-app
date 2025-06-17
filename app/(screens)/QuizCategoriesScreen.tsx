@@ -1,6 +1,6 @@
 import { supabase } from "@/components/lib/supabase";
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, ImageBackground, StyleSheet, Pressable } from "react-native";
+import { View, Text, ImageBackground, StyleSheet, Pressable } from "react-native";
 import { imageMap, fallbackImage } from "../../components/utils/ImagesMap";
 import { Answer, Question } from "@/components/utils/types";
 import { Box } from "@/components/ui/box";
@@ -14,8 +14,7 @@ const imageSource = imageMap["background"] ?? fallbackImage;
 
 export default function QuizCategoriesScreen() {
   const { quizDataValue, setQuizDataValue } = useQuizDataContext();
-  const { colorScheme, setColorScheme } = useColorScheme();
-  const [todos, setTodos] = useState<Question[] | null>(null);
+  const { colorScheme } = useColorScheme();
   const textColor = Colors[colorScheme ?? "light"].text;
   const baseColor = Colors[colorScheme ?? "light"].overImageBackground;
   const lighterBorder = tinycolor(baseColor).lighten(20).toString(); // 20% lighter
@@ -35,15 +34,11 @@ export default function QuizCategoriesScreen() {
           is_answered: false,
         }));
 
-        console.log("data: ", JSON.stringify(data?.length));
-        console.log("error: ", JSON.stringify(error));
         if (error) {
-          console.error("Error fetching todos:", error.message);
-          return;
+          throw error;
         }
 
         if (data && data.length > 0) {
-          console.log("DOWNLOAD");
           setQuizDataValue(data);
         }
       } catch (error: any) {

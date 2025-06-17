@@ -92,12 +92,6 @@ export default function QuizResultCard() {
           Great job! Review your answers or try again to improve your score.
           {/* MAKE PRESETS TO DISPLAY CUSTOM FEEDBACK */}
         </Text>
-
-        {/* <Pressable
-          onPress={() => console.log("axxx")}
-          style={[styles.button, { backgroundColor: Colors[colorScheme ?? "light"].boxbackground }]}>
-          <Text>Inspect results</Text>
-        </Pressable> */}
       </VStack>
     </Card>
   );

@@ -19,7 +19,7 @@ export default function QuizPreviewCard({ label, type }: Props) {
   const imageSource = imageMap[type] ?? fallbackImage;
   return (
     <Pressable
-      onPress={() => router.push({ pathname: "/screens/QuizScreen", params: { quizCategory: label, quizId: "123" } })}
+      onPress={() => router.push({ pathname: "/(screens)/QuizScreen", params: { quizCategory: label, quizId: "123" } })}
       style={{ borderRadius: 20 }}>
       <ImageBackground
         source={imageSource}

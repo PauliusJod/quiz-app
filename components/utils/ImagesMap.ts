@@ -5,6 +5,7 @@ export const imageMap: Record<string, any> = {
   health: require("@/assets/images/health.jpg"),
   nature: require("@/assets/images/nature.png"),
   background: require("@/assets/images/background.jpeg"),
+  setupCompleted: require("@/assets/images/setup_completed.jpg"),
   background1: require("@/assets/images/bg.jpg"),
 };
 export const fallbackImage = require("@/assets/images/icon.png");

@@ -1,6 +1,6 @@
 import { supabase } from "@/components/lib/supabase";
-import React, { useState, useEffect } from "react";
-import { View, ImageBackground, StyleSheet, Pressable } from "react-native";
+import React, { useEffect } from "react";
+import { ImageBackground, StyleSheet } from "react-native";
 import { Text } from "@/components/ui/text";
 
 import { imageMap, fallbackImage } from "../../components/utils/ImagesMap";
@@ -8,12 +8,8 @@ import { Answer, Question } from "@/components/utils/types";
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "nativewind";
 import { useQuizDataContext } from "@/components/lib/useQuizDataContext";
-import QuizQuestion from "@/components/Quiz/QuizQuestion";
-import Feather from "@expo/vector-icons/Feather";
 import { Spinner } from "@/components/ui/spinner";
 import { HStack } from "@/components/ui/hstack";
-import * as Animatable from "react-native-animatable";
-import QuizResultCard from "@/components/Quiz/QuizResultCard";
 import ActiveQuiz from "@/components/Quiz/ActiveQuiz";
 import InActiveQuiz from "@/components/Quiz/InActiveQuiz";
 const tinycolor = require("tinycolor2");
@@ -42,14 +38,10 @@ export default function QuizScreen() {
           is_answered: false,
         }));
         if (error) {
-          console.error("Error fetching todos:", error.message);
-          return;
+          throw error;
         }
         if (data && data.length > 0) {
-          setTimeout(() => {
-            // test only
-            setQuizDataValue(data);
-          }, 100);
+          setQuizDataValue(data);
         }
       } catch (error: any) {
         console.error("Error fetching todos:", error.message);
@@ -93,7 +85,7 @@ export default function QuizScreen() {
       source={imageSource}
       resizeMode='cover'
       style={styles.container}>
-      {!areAllDone() ? <ActiveQuiz></ActiveQuiz> : <InActiveQuiz></InActiveQuiz>}
+      {/* {!areAllDone() ? <ActiveQuiz></ActiveQuiz> : <InActiveQuiz></InActiveQuiz>} */}
       <Text>{JSON.stringify(quizIsFinished)}</Text>
     </ImageBackground>
   );

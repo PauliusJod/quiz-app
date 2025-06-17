@@ -2,8 +2,8 @@ import { StyleSheet } from "react-native";
 import { Text, View } from "@/components/[default_components]/Themed";
 import { useColorScheme } from "nativewind";
 import QuizPreviewCard from "@/components/Quiz/QuizPreviewCard";
-import { Divider } from "@/components/ui/divider";
-import { categoriesMockData, categoriesMockDataNotPersonalized, categoriesMockDataPersonalized } from "@/components/utils/mockData";
+import { categoriesMockData } from "@/components/utils/mockData";
+import PersonalizeCard from "@/components/Personalize/PersonalizeCard";
 
 export default function HomeContentLoggedOutScreen() {
   const { colorScheme, setColorScheme } = useColorScheme();
@@ -11,6 +11,7 @@ export default function HomeContentLoggedOutScreen() {
     <View style={[styles.container]}>
       <View style={{ paddingVertical: 20 }}>
         <Text style={styles.title}>NOT - Personalized</Text>
+        <PersonalizeCard></PersonalizeCard>
         {categoriesMockData.map((category, index) => (
           <QuizPreviewCard
             key={index}

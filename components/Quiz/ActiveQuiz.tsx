@@ -36,13 +36,11 @@ export default function ActiveQuiz() {
   };
   const onQuestionChangeDown = () => {
     if (!quizDataValue) return setCurrQuestion(0);
-    console.log(currQuestion);
     if (currQuestion >= 1) {
       setCurrQuestion((prev: number) => prev - 1);
     }
   };
   const areAllDone = () => {
-    console.log("tttttttttttttttttt");
     if (!quizDataValue) return false;
     const isDone = quizDataValue.every((q) => q.is_answered);
     setQuizIsFinishedValue(isDone);

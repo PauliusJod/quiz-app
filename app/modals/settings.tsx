@@ -20,11 +20,11 @@ import * as Animatable from "react-native-animatable";
 // SETTINGS
 export default function SettingsScreen() {
   const { colorScheme, setColorScheme } = useColorScheme();
+  const { onUserLogoutSession } = useSessionContext();
   const [showLoginOptions, setShowLoginOptions] = useState<boolean>(true);
   const [loading, setLoading] = useState(false);
   const { sessionValue } = useSessionContext();
   useEffect(() => {
-    console.log(!sessionValue);
     if (!sessionValue) {
       setShowLoginOptions(true);
     } else {
@@ -110,11 +110,9 @@ export default function SettingsScreen() {
                       setLoading(true);
                       try {
                         const { error } = await supabase.auth.signOut();
-                        console.log("OUT: ", JSON.stringify(error));
-
-                        throw new Error("sign out sucess!");
+                        onUserLogoutSession();
+                        throw new Error("sign out success!");
                       } catch (error: any) {
-                        console.log("err: ", JSON.stringify(error));
                         setLoading(false);
                       }
                     }}>

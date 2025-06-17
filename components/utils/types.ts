@@ -21,3 +21,34 @@ export type Quiz = {
   description: string;
   questions: Question[] | null;
 };
+
+export type UserPersonalization = {
+  user_id: string;
+  age: string | null;
+  interests: string[] | [];
+  gender: string | null;
+  difficulty: string | null;
+  frequency: string | null;
+  timedPreference: string | null;
+  modePreference: string | null;
+  created_at: Date;
+};
+export type UserSurveyData = {
+  age: string | null;
+  difficulty: string | null;
+  frequency: string | null;
+  gender: string | null;
+  interests: string[] | [];
+  modePreference: string | null;
+  timedPreference: string | null;
+};
+
+export const emptyUserSurveyData: UserSurveyData = {
+  age: "",
+  difficulty: "",
+  frequency: "",
+  gender: "",
+  interests: [],
+  modePreference: "",
+  timedPreference: "",
+};

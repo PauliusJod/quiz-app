@@ -4,8 +4,8 @@ export const categoriesMockData = [
     type: "history",
   },
   {
-    label: "Physics",
-    type: "physics",
+    label: "Science",
+    type: "science",
   },
   {
     label: "Health",
@@ -18,6 +18,14 @@ export const categoriesMockData = [
   {
     label: "Geography",
     type: "geography",
+  },
+  {
+    label: "Technology",
+    type: "technology",
+  },
+  {
+    label: "Art & Culture",
+    type: "artCulture",
   },
 ];
 export const categoriesMockDataNotPersonalized = [
@@ -33,6 +41,10 @@ export const categoriesMockDataNotPersonalized = [
     label: "Geography",
     type: "geography",
   },
+  {
+    label: "Technology",
+    type: "technology",
+  },
 ];
 export const categoriesMockDataPersonalized = [
   {
@@ -40,7 +52,20 @@ export const categoriesMockDataPersonalized = [
     type: "history",
   },
   {
-    label: "Physics",
-    type: "physics",
+    label: "Science",
+    type: "science",
   },
+  {
+    label: "Art & Culture",
+    type: "artCulture",
+  },
+];
+export const progressData = [
+  { label: "General Knowledge", value: 80 },
+  { label: "History", value: 65 },
+  { label: "Science", value: 45 },
+  { label: "Geography", value: 30 },
+  { label: "Health", value: 55 },
+  { label: "Technology", value: 70 },
+  { label: "Art & Culture", value: 40 },
 ];

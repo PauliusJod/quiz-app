@@ -35,13 +35,11 @@ export default function InActiveQuiz() {
   };
   const onQuestionChangeDown = () => {
     if (!quizDataValue) return setCurrQuestion(0);
-    console.log(currQuestion);
     if (currQuestion >= 1) {
       setCurrQuestion((prev: number) => prev - 1);
     }
   };
   const areAllDone = () => {
-    console.log("tttttttttttttttttt");
     if (!quizDataValue) {
       setQuizIsFinishedValue(false);
       return false;
@@ -87,11 +85,6 @@ export default function InActiveQuiz() {
             color={Colors[colorScheme ?? "light"].themeIconsDefault}
             style={{ padding: 5, opacity: 1 }}
           />
-          {/* <Text
-            size='md'
-            style={{ color: textColor }}>
-            Next QUIZ
-          </Text> */}
         </Pressable>
         <Pressable onPress={() => onQuestionChangeUp()}>
           <Feather

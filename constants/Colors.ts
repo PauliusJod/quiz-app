@@ -7,7 +7,7 @@ export default {
     background: "#fff",
     boxbackground: "rgba(124, 45, 18, 0.1)",
     tint: tintColorLight,
-    overImageBackground: "rgb(52, 211, 153)",
+    overImageBackground: "#34d399",
     gIconDefault: "#047857",
     fbIconDefault: "#0369a1",
     themeIconsDefault: "#0c4a6e",
@@ -19,7 +19,7 @@ export default {
     background: "#141414", // "#000"
     boxbackground: "rgba(8, 51, 68, 0.5)",
     tint: tintColorDark,
-    overImageBackground: "rgb(8, 47, 73)",
+    overImageBackground: "#082f49",
     gIconDefault: "#10b981", // emerald
     fbIconDefault: "#0ea5e9", // sky
     themeIconsDefault: "#10b981",

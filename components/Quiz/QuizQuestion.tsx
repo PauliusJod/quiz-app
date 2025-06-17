@@ -46,7 +46,6 @@ export default function QuizQuestion({ question, onChange, animation }: Props) {
                 pressable={question.is_answered}
                 onPress={() => {
                   setQuizDataValue(onAnswerPressed(question.id, answer.id, quizDataValue));
-                  console.log(JSON.stringify(quizDataValue[0]));
                   onChange();
                 }}
               />
